@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+ href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css"
+ integrity="sha384-OHBBOqpYHNsIqQy8hL1U+8OXf9hH6QRxi0+EODezv82DfnZoV7qoHAZDwMwEJvSw"
+ crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style1.css">
+    <title>Glamping</title>
+  </head>
+  <body>
+
+    <!-- JUMBOTRON START -->
+    <div class="jumbotron jumbotron-fluid" id="background">
+      <h1 class="display-3" style="text-align:center">Bad & Bougie</h1>
+      <p class="lead" style="text-align:center">Glamping? You've come to the right place.</p>
+      <hr class="my-4">
+
+    <!-- JUSTIFY MIDDLE START -->
+
+    <div class="container" style="text-align:center" >
+      <div class="row">
+        <div class="col">
+          <!-- EMPTY -->
+        </div>
+        <div class="col-sm-auto col-md-auto col-lg-auto">
+          <p>Where's your next adventure?</p>
+          <p class="lead">
+            <div for="nanp-input" class="input-group">
+              <span class="input-group-btn">
+                <button id="find-nanp" class="btn btn-default" type="submit" value="North American National Park Search">Go!</button>
+              </span>
+              <input type="text" id="nanp-input" class="form-control" placeholder="Search a State...">
+            </div><!-- /input-group -->
+          </p>
+
+          <!--Modal-->
+          <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Invalid Input</h4>
+                  <button id='closeModal' type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Please enter a two-character state abbreviation.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+          </div>
+          <!-- /.modal -->
+          <!--End Modal-->
+
+        </div>
+        <div class="col">
+          <!-- EMPTY -->
+        </div>
+      </div>
+    <!-- JUSTIFY MIDDLE END -->
+    </div>
+    <!-- JUMBOTRON END -->
+  </div>
+
+  <div id="nanp-view">
+    <table class="table table-dark table-sm table-hover table-striped" id='parks-table'>
+      <thead id='parksHead'>
+        <tr>        
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+    <!-- PANELS START -->
+
+    <div class="card-group">
+      <div class="card">
+        <img class="card-img-top img-fluid" src="assets/images/animat-map-color.gif" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title">Park Amenities</h3>
+          <p class="card-text">What does this Park have that others don't? Take a peak.</p>
+          <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top img-fluid" src="assets/images/animat-coffee-color.gif" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title">Nearby Fine Dining</h3>
+          <p class="card-text">Long day in the wild? Cozy up with your fave drink. Let loose - you deserve it.</p>
+          <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top img-fluid" src="assets/images/animat-checkmark-color.gif" alt="Card image cap">
+        <div class="card-body">
+          <h3 class="card-title">Rate It!</h3>
+          <p class="card-text">Help others like yourself find their bougie fit! You know you want to.</p>
+          <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+        </div>
+      </div>
+    </div>
+
+
+    <!-- PANELS END -->
+
+
+
+    <!-- Firebase... -->
+    <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyACcPb4g5kmWTvsLPagxtrMfV8ShgALWGU",
+          authDomain: "groupproject1-d169c.firebaseapp.com",
+          databaseURL: "https://groupproject1-d169c.firebaseio.com",
+          projectId: "groupproject1-d169c",
+          storageBucket: "groupproject1-d169c.appspot.com",
+          messagingSenderId: "480872825289"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <!-- End Firebase Script .... -->
+
+
+    <script src="assets/javascript/app.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,88 @@
+------------------------------------------------------------------------------------------------------------
+Nation Park Services
+------------------------------------------------------------------------------------------------------------
+Example of a key:
+https://developer.nps.gov/api/v1/parks?parkCode=acad&api_key=ebkHAQqxYcIP2uGebz8ASYNVFfvte7BsrBhfhAvC
+
+Resource Endpoint = https://developer.nps.gov/api/v1/alerts
+Query String Parameters = parkCode=acad,dena
+API Key = ebkHAQqxYcIP2uGebz8ASYNVFfvte7BsrBhfhAvC
+
+https://www.nps.gov/subjects/developer/api-documentation.htm#/
+
+API Key for National Park Services (NPS.gov)
+
+ebkHAQqxYcIP2uGebz8ASYNVFfvte7BsrBhfhAvC
+
+------------------------------------------------------------------------------------------------------------
+National Geographic API
+------------------------------------------------------------------------------------------------------------
+
+URL = https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=
+
+Key 7f2f13d6d6e143e0b7785a1410a05165
+
+
+------------------------------------------------------------------------------------------------------------
+Google Search Box
+https://cse.google.com/cse/create/congrats?cx=017605709253055308006%3Akypnoh2wxqu
+------------------------------------------------------------------------------------------------------------
+
+https://developers.google.com/custom-search/json-api/v1/reference/cse/list
+
+Google Custom Search Engine (CSE) API Key AIzaSyA3ZeWMS6wLEnWGK_rhza_UsxwGapx2Stw 
+					  AIzaSyA3ZeWMS6wLEnWGK_rhza_UsxwGapx2Stw 
+
+Search engine ID = 017605709253055308006:kypnoh2wxqu
+
+url = https://cse.google.com/cse/publicurl?cx=017605709253055308006:kypnoh2wxqu
+      https://cse.google.com:443/cse/publicurl?cx=017605709253055308006:kypnoh2wxqu
+
+q=Fredericksburg & Spotsylvania National Military Park
+
+
+------------------------------------------------------------------------------------------------------------
+Pixabay.com (images)
+------------------------------------------------------------------------------------------------------------
+API url = https://pixabay.com/api/
+
+Components:
+url = https://pixabay.com/api/
+key = ?key={ KEY }
+Query = q=yellow+flowers&image_type=photo
+
+Full
+https://pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
+
+https://pixabay.com/api/?key=7657924-0bde27079c14e7a1dd1053bf8&q= &per_page=2
+
+username = c_pocai1
+email - c_pocai1@hotmail.com
+password = P@swd123_
+API key =7657924-0bde27079c14e7a1dd1053bf8
+
+------------------------------------------------------------------------------------------------------------
+Unsplash.com (images)
+------------------------------------------------------------------------------------------------------------
+unsplash.com
+username = c_pocai1
+password = P@swd123_
+imgSize=medium
+imgType=photo
+num=1
+
+https://api.unsplash.com/search/photos?page=1&query=office
+
+------------------------------------------------------------------------------------------------------------
+Extra code
+------------------------------------------------------------------------------------------------------------
+
+http://yourshot.nationalgeographic.com/tags/api/
+
+
+var queryURL1 = "https://newsapi.org/v2/everything?q=
+
+https://en.wikipedia.org/wiki/List_of_national_parks_of_the_United_States
+
+
+
