@@ -107,6 +107,7 @@ $(document).ready(function() {
               var parkName = parksResults[i].name;
               var description = parksResults[i].description;
               var parkCode = parksResults[i].parkCode;
+              var parkCodeSelector = '#' + parkCode;
               var stampLocation = 'assets/images/Click Pics/' + parkName + '.jpg';
               var stampImage = '<img class="stamp", src="' + stampLocation + '" alt="' + parkName + ' Image">';
               $('#loading').remove();
@@ -138,119 +139,109 @@ $(document).ready(function() {
               // NPS/campgrounds API call
               var campgroundsQueryURL = "https://developer.nps.gov/api/v1/campgrounds?parkCode=" + parkCode + "&api_key=ebkHAQqxYcIP2uGebz8ASYNVFfvte7BsrBhfhAvC";
 
-              $.ajax({
-                url: campgroundsQueryURL,
-                method: "GET"
-              }).done(function(campgroundsData) {
-                var campgroundsResults = (campgroundsData.data);
+              function campgroundsAJAX() {
+                $('.bLabel').text('No Camping');
+                return $.ajax({
+                  url: campgroundsQueryURL,
+                  method: "GET",
+                  dataType: "json",
+                  success: function(campgroundsData) {
+                    campgroundsResults = (campgroundsData.data);
+                  } // close function, success
+                }); // close ajax call
+              } //close function, parksAJAX
+
+              $.when(campgroundsAJAX()).done(function(campgroundsData) {
                 console.log(campgroundsResults);
 
-                // check each campground for bougie amenities
-                for (var j = 0; j < campgroundsResults.length; j++) {
-                  var campCode = campgroundsResults[j].parkCode;
-                  var flushToilets = 0;
-                  var rvAllowed = 0;
-                  var hasInternet = 0;
-                  var toiletArray = campgroundsResults[j].amenities.toilets;
-                  var toiletType = toiletArray[0];
+                  // check each campground for bougie amenities
+                  for (var j = 0; j < campgroundsResults.length; j++) {
+                    var campCode = campgroundsResults[j].parkCode;
+                    var flushToilets = 0;
+                    var rvAllowed = 0;
+                    var hasInternet = 0;
+                    var toiletArray = campgroundsResults[j].amenities.toilets;
+                    var toiletType = toiletArray[0];
 
-                  // record parkCode of each campground
-                  parkCodeArray.push(campCode);
-                  console.log(parkCodeArray);
-                  // determine to which park ratings of these campgrounds should be assigned
-                  function mode(array){
-                      return array.sort((a,b) =>
-                            array.filter(v => v===a).length
-                          - array.filter(v => v===b).length
-                      ).pop();
-                  }
+                    // record parkCode of each campground
+                    parkCodeArray.push(campCode);
+                    console.log(parkCodeArray);
+                    // determine to which park ratings of these campgrounds should be assigned
+                    function mode(array){
+                        return array.sort((a,b) =>
+                              array.filter(v => v===a).length
+                            - array.filter(v => v===b).length
+                        ).pop();
+                    }
 
-                  var modeParkCode = mode(parkCodeArray);
-                  console.log(modeParkCode);
-                  // variable to store the modeParkCode as a JQuery selector
-                  var parkSelector = '#' + modeParkCode ;
-                  // are flush toilets present
-                  if (toiletType.includes('Flush')) {
-                    flushToilets++
-                  };
+                    var modeParkCode = mode(parkCodeArray);
+                    console.log(modeParkCode);
+                    // variable to store the modeParkCode as a JQuery selector
+                    var campCodeSelector = '#' + modeParkCode ;
+                    // are flush toilets present
+                    if (toiletType.includes('Flush')) {
+                      flushToilets++
+                    };
 
-                  // are RVs allowed
-                  var rvOK = campgroundsResults[j].accessibility.rvAllowed;
-                  if (rvOK === 1) {
-                    rvAllowed++
-                  };
+                    // are RVs allowed
+                    var rvOK = campgroundsResults[j].accessibility.rvAllowed;
+                    if (rvOK === 1) {
+                      rvAllowed++
+                    };
 
-                  // is there internet access
-                  var internet = campgroundsResults[j].amenities.internetConnectivity;
-                  if (internet) {
-                    hasInternet++
-                  }
-
-
-                  // determine bougie rating based on campground amenities and record result
-                  console.log('flushToilets', flushToilets);
-                  console.log('rvAllowed', rvAllowed);
-                  console.log('hasInternet', hasInternet);
-                    var bougieAmenities = flushToilets + rvAllowed + hasInternet;
-                    console.log('bougieAmenities', bougieAmenities);
-                    // $('.bLabel').text('No Camping');
-                    if ( bougieAmenities >= 2) {
-                      // campgroundRating ='Bougie';
-                      console.log('Bougie');
-                      bougieLabelArray.push('Bougie')
-                    } //close if
-
-                    // campgroundRating = '';
+                    // is there internet access
+                    var internet = campgroundsResults[j].amenities.internetConnectivity;
+                    if (internet) {
+                      hasInternet++
+                    }
 
 
-                  // on final iteration, update search results with overall ratings
-                  if (j + 1 === campgroundsResults.length) {
-                    console.log(bougieLabelArray);
-                    if ( bougieLabelArray.length >= 1) {
-                      // campgroundRating ='Bougie';
-                      console.log('Bougie');
-                      $(parkSelector).text('Bougie')
-                    } //close if
-                    else {
-                      // campgroundRating = 'Bad';
-                      console.log('Bad');
-                      $(parkSelector).text('Bad')
-                    } // close else
-                    bougieLabelArray = [];
-                  } // close if, last iteration of campgrounds
+                    // determine bougie rating based on campground amenities and record result
+                    console.log('flushToilets', flushToilets);
+                    console.log('rvAllowed', rvAllowed);
+                    console.log('hasInternet', hasInternet);
+                      var bougieAmenities = flushToilets + rvAllowed + hasInternet;
+                      console.log('bougieAmenities', bougieAmenities);
+                      if ( bougieAmenities >= 2) {
+                        // campgroundRating ='Bougie';
+                        console.log('campground is Bougie');
+                        bougieLabelArray.push('Bougie')
+                      } //close if
 
-                  // if (userRating > .5) {
-                  //   bougieScore += 4
-                  // } //close if; userRating
-                  // else if (userRating < .5 && userRating >= 0) {
-                  //   bougieScore -= 4
-                  // } //close else if; userRating
+                      // campgroundRating = '';
 
 
+                    // on final iteration, update search results with overall ratings
+                    if (j + 1 === campgroundsResults.length) {
 
+                      console.log(bougieLabelArray);
+                      if ( bougieLabelArray.length >= 1) {
+                        // campgroundRating ='Bougie';
+                        console.log(campCodeSelector, 'is Bougie');
+                        $(campCodeSelector).text('Bougie')
+                      } //close if
+                      else {
+                        // campgroundRating = 'Bad';
+                        console.log(campCodeSelector, 'is Bad');
+                        $(campCodeSelector).text('Bad')
+                      } // close else
+                      bougieLabelArray = [];
+                    } // close if, last iteration of campgrounds
 
+                    // if (userRating > .5) {
+                    //   bougieScore += 4
+                    // } //close if; userRating
+                    // else if (userRating < .5 && userRating >= 0) {
+                    //   bougieScore -= 4
+                    // } //close else if; userRating
 
-                  flushToilets = 0;
-                  rvAllowed = 0;
-                  hasInternet = 0;
-                }; // close loop, check each campground
+                    flushToilets = 0;
+                    rvAllowed = 0;
+                    hasInternet = 0;
+                  }; // close loop, check each campground
 
-                // console.log(campCode, 'bougieCampgrounds', bougieCampgrounds);
-                // var parkSelector = '#' + i;
-                // console.log('parkSelector', parkSelector);
-                // $(parkSelector).text('Bougie');
-                // if (bougieCampgrounds.includes(1)) {
-                //   var parkSelector = '#' + i ;
-                //   $(parkSelector).text('Bougie');
-                // }
-                // else {
-                //   var parkSelector = '#' + i ;
-                //   $(parkSelector).text('Bad');
-                // }
 
               }); // close function campground response
-
-
             } //End of if, designation
             else {
               $('#loading').text('No results found. Search for another state.')
@@ -261,7 +252,6 @@ $(document).ready(function() {
 
         }); //End of function parksData
       } // close if, current query doesn't equal last query
-
     }; // close else, input validation
   }); //End of onclick function
 
