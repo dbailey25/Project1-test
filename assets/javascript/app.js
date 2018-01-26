@@ -110,7 +110,7 @@ $(document).ready(function() {
               var stampLocation = 'assets/images/Click Pics/' + parkName + '.jpg';
               var stampImage = '<img class="stamp", src="' + stampLocation + '" alt="' + parkName + ' Image">';
               $('#loading').remove();
-              var appendRow = $("#parks-table > tbody").append("<tr><td>" + parkName + "</td><td>" + stampImage + "</td><td id='" + parkCode + "'>" + bougieLabel + "</td></tr>");
+              var appendRow = $("#parks-table > tbody").append("<tr><td>" + parkName + "</td><td>" + stampImage + "</td><td class=bLabel id='" + parkCode + "'>" + bougieLabel + "</td></tr>");
               var bougieCampgrounds = [];
 
               parkNameArray.push(parkName);
@@ -187,12 +187,26 @@ $(document).ready(function() {
                   }
 
 
-                  // determine bougie rating based on campground amenities and update the search results table accordingly
+                  // determine bougie rating based on campground amenities and record result
                   console.log('flushToilets', flushToilets);
                   console.log('rvAllowed', rvAllowed);
                   console.log('hasInternet', hasInternet);
+                    var bougieAmenities = flushToilets + rvAllowed + hasInternet;
+                    console.log('bougieAmenities', bougieAmenities);
+                    // $('.bLabel').text('No Camping');
+                    if ( bougieAmenities >= 2) {
+                      // campgroundRating ='Bougie';
+                      console.log('Bougie');
+                      bougieLabelArray.push('Bougie')
+                    } //close if
+
+                    // campgroundRating = '';
+
+
+                  // on final iteration, update search results with overall ratings
                   if (j + 1 === campgroundsResults.length) {
-                    if (flushToilets + rvAllowed + hasInternet >= 1) {
+                    console.log(bougieLabelArray);
+                    if ( bougieLabelArray.length >= 1) {
                       // campgroundRating ='Bougie';
                       console.log('Bougie');
                       $(parkSelector).text('Bougie')
@@ -201,11 +215,9 @@ $(document).ready(function() {
                       // campgroundRating = 'Bad';
                       console.log('Bad');
                       $(parkSelector).text('Bad')
-                    }
-                    // campgroundRating = '';
-                  }
-
-
+                    } // close else
+                    bougieLabelArray = [];
+                  } // close if, last iteration of campgrounds
 
                   // if (userRating > .5) {
                   //   bougieScore += 4
@@ -215,8 +227,7 @@ $(document).ready(function() {
                   // } //close else if; userRating
 
 
-                  // var codeSelector = '#' + campCode ;
-                  // $(codeSelector).text(bougieLabel);
+
 
 
                   flushToilets = 0;
